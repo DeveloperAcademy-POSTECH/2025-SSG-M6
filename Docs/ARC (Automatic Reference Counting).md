@@ -38,6 +38,7 @@
 + **Swift compiler inserts retain/release operations**
   : Swift 컴파일러 ([[LLVM 컴파일러]])는 코드를 분석하여 적절한 위치에 `retain`, `release` 호출을 자동으로 삽입한다.
   여기서의 retain은 참조 카운트 1 증가, release는 참조 카운트 1 감소를 의미!
+  이때 클래스 인스턴스를 참조하면서 참조 카운트가 증가되는 상황을 [[강한 참조 (Strong Reference)]]라고 부릅니다.
   
 + **Swift runtime deallocates object with 0 reference count**
   : 컴파일러가 release 호출을 통해 참조 수를 줄이면, **Swift 런타임은** 이를 추적하다가 **참조 수가 0이 되는 시점에 deinit을 호출**하고 메모리에서 해제한다.
@@ -105,9 +106,36 @@ func test() {
 ```
   
 
+- 하지만, 관찰 가능한 객체의 수명 (Observable Object Lifetimes)에 의존하는 코드는 위험하다.
+  : 개발자가 눈으로 보는 실행 결과 (= 어떤 시점에서 객체가 deinit되는지 관찰한 결과)를 기준으로 로직을 작성하면 문제가 생길 수 있다. -> "눈으로 보는 실행 결과가 즉, 관찰 가능한 객체의 수명을 의미"
+
+```swift
+class Thing {
+    deinit {
+        print("Thing deinitialized")
+    }
+} 
+
+func trigger() {
+    let thing = Thing()
+    // thing은 해당 클로저 안에서 사용되니까 메모리에 살아있겠지라고 생각하지만, 
+    // 만약 Swift 컴파일러가 thing을 캡처하지 않는다고 판단한다면,
+    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+        print(thing) // 여기 도달 전에 thing이 이미 해제될 수도 있음
+    }
+}
+```
+
+>[!tip]
+> 관찰가능한 객체의 수명 (**Observed lifetime**)이 아니라 보장된 수명 (**Guaranteed lifetime**)을 기준으로 의존해야 한다.
+> 즉, 객체가 마지막으로 명시적으로 사용된 지점까지 / 그 이후는 컴파일러 최적화에 따라 언제든지 해제될 수 있음을 전제로 코드를 작성해야만 합니다!
+> -> [[클로저 (Closure)]] 안에서 객체가 필요하다면, 반드시 "***명시적***"으로 캡처해야 한다!!!
+
+
 ## Keywords
 
 + [[순환 참조 (Retain Cycle)]]
++ [[강한 참조 (Strong Reference)]]
 - [[LLVM 컴파일러]]
   
 
