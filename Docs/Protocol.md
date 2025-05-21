@@ -17,21 +17,48 @@
 > 프로토콜 **구문**
 
 - 프로토콜 **정의**
-	- 프로토콜은 Type이기 때문에 **대문자**로 만들어준다.
 ```swift
-protocol LearnerProtocol {
+protocol Learner {
 	//protocol definition
 }
 ```
-
-- **채택시(class, struct, enum)**
+ 
+ - **채택시(class, struct, enum)**
 	- 여러 프로토콜들은 컴마로 구분된다.
 	- class가 상위 class를 가진 경우에는 맨 앞에 상위 class를 작성한다.
 ```swift
-class someClass: UIViewController, LearnerProtocol, SsgProtocol {
+class someClass: UIViewController, Learner, Service {
 	// class definition
 }
 ```
+
+- 프로토콜 **네이밍 규칙**
+	- 프로토콜은 Type이기 때문에 **UpperCamelCase**로 만들어준다.
+	- 프로토콜은 개념/역할을 중심으로 네이밍
+	- 구현체는 구체적인 기능/상황을 중심으로 네이밍
+
+- swift 내의 **프로토콜 - 구현체** 예시
+	- Collection - `Array`, `Dictionary`, `Set`
+	- Comparable - `Int`, `Double`, `String`
+	- Error - `enum NetworkError: Error { ... }`
+
+ex) Collection
+```swift
+protocol Collection {}
+struct Array<Element>: Collection {}
+struct Dictionary<Key: Hashable, Value>: Collection {}
+struct Set<Element: Hashable>: Collection {}
+```
+
+ex) UserService
+```swift
+protocol UserService {}
+struct NetworkUserService: UserService {}
+struct MockUserService: UserService {}
+struct CachedUserService: UserService {}
+```
+
+
 #### **Property** Requirements
 > **프로퍼티** 요구사항
 
@@ -91,6 +118,9 @@ print("And another one: \(generator.random())")
 ```
 #### **Mutating Method** Requirements
 > **변경 메서드** 요구사항
+- 변경 메서드 사용 조건
+	- 값 타입(Value Type)이 프로토콜을 채택할 가능성이 있음
+    - 해당 메서드가 프로퍼티 또는 self를 수정할 예정임
 
 ```swift
 protocol Toggleable {
@@ -142,6 +172,7 @@ class SomeSubClass: SomeSuperClass, SomeProtocol {
 + Class, Struct, Enum
 + Getter, Setter
 + Delegation
++ [[Method]]
 
 ## References
 - [Swift.org](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/protocols/)
