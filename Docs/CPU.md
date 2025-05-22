@@ -109,7 +109,7 @@ _핵심_: RealityKit가 **CPU에서 그리기 명령**을 만들어 GPU에 던�
 ## Keywords
 - [[Thread]]
 - [[Task]]
-- [[ARC]]
+- [[ARC (Automatic Reference Counting)]]
 
 ## References
 - https://developer.apple.com/documentation/uikit/uiview
