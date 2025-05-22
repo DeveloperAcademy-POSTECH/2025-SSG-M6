@@ -220,7 +220,7 @@ let counter2 = makeCounter()
 print(counter2()) // 1
 ```
 
-#### 순환 참조
+#### [[순환 참조 (Retain Cycle)]]
 
 클로저가 self를 강하게 참조하면 메모리 누수 발생한다.
 클로저는 self를 캡처하기 때문에, weak self로 참조 순환을 방지해야 한다.
@@ -239,11 +239,11 @@ class Downloader {
 }
 ```
 
-- [weak self]
+- [[약한 참조 (weak Reference)]]]
     
     약한 참조로 클로저가 self를 소유하지 않도록 한다. 순환 참조 방지를 위해 사용.
     
-- [unowned self]
+- [[미소유 참조 (unowned Reference)]]]
     
     self가 반드시 존재하는 경우에 사용 가능하다. self가 먼저 해제되면 크래시가 발생할 수 있다.
     
