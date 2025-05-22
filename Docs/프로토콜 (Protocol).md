@@ -164,7 +164,7 @@ class SomeSubClass: SomeSuperClass, SomeProtocol {
 ```
 
 ## Protocol in Practice
-[[Delegation]]
+[[델리게이트 패턴 (Delegate Pattern)]]
 [[Protocol Extension]]
 [[Protocol-Oriented Programming(POP)]]
 ## Keywords
