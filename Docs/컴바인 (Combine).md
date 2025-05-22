@@ -100,21 +100,21 @@ Just("hello world")  →  .map { uppercased }  →  .sink { print }
 ---
 ### 그래서 언제 써요?
 
-Combine은 다양한 [[비동기(Asynchronous)]]/이벤트 작업을 하나의 선언적 흐름으로 통합할 수 있는 프레임워크입니다.  
+Combine은 다양한 [[비동기 (Asynchronous)]]/이벤트 작업을 하나의 선언적 흐름으로 통합할 수 있는 프레임워크입니다.  
 복잡한 콜백/델리게이트 구조를 명확하게 바꾸고 싶을 때 유용하며,  
 예를 들어 검색창 입력 제어, API 응답 처리, UI 상태-데이터 바인딩처럼 **흐름이 이어지는 작업을 간결하게 구성**할 수 있습니다.
 
 > Combine은 **비동기 흐름을 조립 가능한 데이터 스트림으로 바꾸어**, **복잡한 UI 이벤트, 네트워크 처리, 상태 바인딩을 단순하고 선언적으로 만들고자 할 때 가장 효과적**입니다.
 
 ### Keyword
-[[비동기(Asynchronous)]]
+[[비동기 (Asynchronous)]]
 [[반응형 프로그래밍 (Reactive Programming)]]
 
 ## [[RxSwift]]가 이미 널리 쓰이고 있었는데, 왜 [[컴바인 (Combine)]]프레임워크를 새로 만들었을까?
 
 취업 공고를 들어가면 보이는 .. "RxSwift 가능하신 분 🙋🏻‍♀️ Combine 사용해보신 분 🙋🏻‍♂️" 보고 의문을 가지게 되었어요.
 
-우선 RxSwift와 Combine 모두 [[비동기(Asynchronous)]] 프로그래밍과 [[반응형 프로그래밍 (Reactive Programming)]]을 지원하는 도구들입니다.
+우선 RxSwift와 Combine 모두 [[비동기 (Asynchronous)]] 프로그래밍과 [[반응형 프로그래밍 (Reactive Programming)]]을 지원하는 도구들입니다.
 
 각자의 장단점을 알아보자면,
 #### [[RxSwift]]
@@ -129,7 +129,7 @@ Combine은 다양한 [[비동기(Asynchronous)]]/이벤트 작업을 하나의 �
 - 의존성 추가 필요
 	- 외부 라이브러리(SPM, CocoaPods 등)를 설치해야 함
 - 메모리 관리 어려움
-	- bind 사용 시 [[순환 참조(Retain Cycle)]] 발생 가능
+	- bind 사용 시 [[순환 참조 (Retain Cycle)]] 발생 가능
 - 추상화가 과도할 수 있음
 	- 내부 흐름 디버깅이 어려운 경우가 있고, Observable 내부 상태 추적이 어렵기도 함
 - 공식 지원이 아님
