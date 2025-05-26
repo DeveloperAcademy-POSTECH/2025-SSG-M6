@@ -39,3 +39,6 @@ Temporary Items
 .obsidian/
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,obsidian
+
+.makemd/
+.space/
