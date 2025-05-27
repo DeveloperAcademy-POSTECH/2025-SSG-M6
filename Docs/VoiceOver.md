@@ -111,5 +111,6 @@ VStack {
 + [SwiftUI]
 
 ## References
-- [Apple 공식 문서: Accessibility in SwiftUI](https://developer.apple.com/documentation/swiftui/accessibility)
-- [Apple 공식 문서: VoiceOver](https://developer.apple.com/accessibility/voiceover/)
+- https://developer.apple.com/documentation/uikit/supporting-voiceover-in-your-app
+- https://developer.apple.com/documentation/swiftui/modifiedcontent
+- https://developer.apple.com/documentation/accessibility/voiceover
