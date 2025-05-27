@@ -34,13 +34,13 @@ JSON이나 Swift 딕셔너리로도 정의 가능
 #### CHHapticEvent (햅틱 이벤트)
 
 하나의 진동 / 소리 **이벤트 단위**
-<font color="teal">eventType</font> : 진동인지 소리인지
+<font color="teal">eventType</font> : 햅틱 이벤트 종류 지정 ( .hapticTransient vs .hapticContinuous )
 <font color="teal">time</font> : 언제 시작할지
-<font color="teal">duration</font> : 지속 시간
+<font color="teal">duration</font> : 지속 시간 
 <font color="teal">parameters</font> : 강도(intensity), 날카로움(sharpness)
 
 
-#### CHHapticPatternPlayer (패턴 재생기)
+#### CHHapticPatternPlayer (패턴 재생기) 
 
 패턴을 받아 재생하는 플레이어 객체
 
@@ -89,6 +89,22 @@ self.playHapticByDB(db)  // <- 데시벨을 전달해 햅틱 피드백을 연결
 
 ## 햅틱 피드백을 동적으로 적용하려면 어떤 API를 사용해야 할까? -> CHHapticAdvancedPatternPlayer + .hapticContinuous 이벤트 + sendParameters(_:atTime:) 
 
+CHHapticAdvancedPatternPlayer은 정적 개체로 재생 중 햅틱의 강도나 특성을 변경할 수 있습니다. 
+
+실시간 제어가 필요하다면 반드시 .hapticsContinuous를 사용해야 함 -> 찰나의 진동이 아닌, 지속적으로 진동을 생성할 수 있어야 하는데
+
+왜 .hapticTransient은 안돼요? 자라란
+
+| 항목              | `.hapticTransient` | `.hapticContinuous`   |
+| --------------- | ------------------ | --------------------- |
+| **신호 길이**       | 매우 짧음 (0~0.1초)     | 수 초 이상 가능             |
+| **제어 가능성**      | 없음 (재생되면 끝)        | 있음 (DSP가 살아 있음)       |
+| **실시간 파라미터 변경** | 불가능                | 가능                    |
+| **적용 대상**       | 버튼 탭, 클릭           | 긴 피드백, 경고, UI 상호작용 유지 |
+
+sendParameters는 CHHapticAdvancedPatternPlayer을 사용하여 재생 중인 햅틱의 속성을 실시간으로 변경할 수 있도록 해주는 메서드입니다.
+
+위 3가지 조합을 이용하면, 햅틱 종류를 미리 만들지 않고도 실시간 데시벨 측정으로 햅틱 피드백을 설정할 수 있습니다 !
 
 ## References
 - [📑 Documentation](https://developer.apple.com/documentation/corehaptics)
