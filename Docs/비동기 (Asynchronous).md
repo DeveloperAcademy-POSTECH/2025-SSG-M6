@@ -45,25 +45,42 @@ Completion Handler는 비동기 작업이 완료된 후 완료된 작업을 처�
 작업이 완료되면 Completion Handler가 호출되고, 결과나 에러를 전달한다.
 
 ```swift
-func downloadImage(completion: @escaping (UIImage?) -> Void) {
-    DispatchQueue.global().async {
-
-        let image = UIImage()
-        
-        DispatchQueue.main.async {
-            completion(image)
+func downloadImage(from url: URL, completion: @escaping @Sendable (Result<UIImage, Error>) -> Void) {
+    URLSession.shared.dataTask(with: url) { data, response, error in
+        if let error = error {
+            DispatchQueue.main.async {
+                completion(.failure(error))
+            }
+            return
         }
-    }
+
+        guard let data = data, let image = UIImage(data: data) else {
+            DispatchQueue.main.async {
+                completion(.failure(NSError()))
+            }
+            return
+        }
+
+        DispatchQueue.main.async {
+            completion(.success(image))
+        }
+    }.resume()
 }
 
-downloadImage {
-	print("이미지 표시")
+downloadImage(from: url) { result in
+    switch result {
+    case .success(let image):
+        print("이미지 다운로드 성공: \(image)")
+    case .failure(let error):
+        print("다운로드 실패: \(error.localizedDescription)")
+    }
 }
 ```
 > 네트워크 요청이 끝난 후 이미지 결과 전달하는 경우 - Completion Handler
 
 @escaping 클로저를 사용하며, 메서드 내부 호출시에 Reference Counting을 신경써야한다.
 그렇지 않으면 [[순환 참조 (Retain Cycle)]]가 발생되기 때문이다. 따라서 weak self 캡처리스트를 사용한다.
+또한, Swift의 동시성 환경에서는 클로저가 여러 스레드에서 동시에 실행될 수 있기 때문에, @Sendable 키워드를 사용해 클로저가 Thread-safe하도록 선언할 수 있다. @Sendable은 클로저 내에서 캡처된 값들이 스레드에 안전하게 작동할 수 있도록 제한을 둔다.
 
 completion Handler를 사용하는 방식은 신경써야 하는 부분이 꽤나 많으며, 비동기 작업이 여러 단계로 중첩되는 경우에 콜백 함수들이 중첩되어서 코드의 가독성이 상당히 떨어지는 콜백 지옥이 발생할 수도 있다.
 
