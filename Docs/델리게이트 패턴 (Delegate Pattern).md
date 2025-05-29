@@ -53,7 +53,7 @@ import UIKit
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 	let tableView = UITableView()
-	let learners = ["Jam", "Mini", "Gus", "Frank", "Berry", "Golwny", "Jay"]
+	let learners = ["Jam", "Mini", "Gus", "Frank", "Berry", "Glowny", "Jay"]
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -188,6 +188,101 @@ class ViewController: UIViewController, UITableViewDataSource, FavoriteCellDeleg
 }
 ```
 
+### 전체 코드(실행 가능)
+```swift
+
+import UIKit
+import SnapKit
+
+// MARK: - Protocol
+protocol FavoriteCellDelegate: AnyObject {
+    func didTapFavoriteButton(in cell: UITableViewCell)
+}
+
+// MARK: - Custom Cell
+class FavoriteCell: UITableViewCell {
+    weak var delegate: FavoriteCellDelegate?
+
+    private let favoriteButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("⭐️", for: .normal)
+        return button
+    }()
+
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setupLayout()
+        favoriteButton.addTarget(self, action: #selector(favoriteButtonTapped), for: .touchUpInside)
+    }
+
+    private func setupLayout() {
+        contentView.addSubview(favoriteButton)
+
+        favoriteButton.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.trailing.equalToSuperview().inset(16)
+        }
+
+        textLabel?.snp.makeConstraints {
+            $0.leading.equalToSuperview().inset(16)
+            $0.centerY.equalToSuperview()
+            $0.trailing.lessThanOrEqualTo(favoriteButton.snp.leading).offset(-8)
+        }
+    }
+
+    @objc func favoriteButtonTapped() {
+        delegate?.didTapFavoriteButton(in: self)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+// MARK: - ViewController
+class ViewController: UIViewController, UITableViewDataSource, FavoriteCellDelegate {
+
+    let tableView = UITableView()
+    let learners = ["Jam", "Mini", "Gus", "Frank", "Berry", "Glowny", "Jay"]
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        
+        setupTableView()
+    }
+
+    private func setupTableView() {
+        view.addSubview(tableView)
+
+        tableView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+
+        tableView.dataSource = self
+        tableView.register(FavoriteCell.self, forCellReuseIdentifier: "FavoriteCell")
+        tableView.rowHeight = 60
+    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return learners.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "FavoriteCell", for: indexPath) as! FavoriteCell
+        cell.textLabel?.text = learners[indexPath.row]
+        cell.delegate = self
+        return cell
+    }
+
+    func didTapFavoriteButton(in cell: UITableViewCell) {
+        if let indexPath = tableView.indexPath(for: cell) {
+            print("찜 버튼 눌림: \(indexPath.row)번 셀")
+        }
+    }
+}
+
+```
 ## SwiftUI에서는?
 > SwiftUI에서는 delegate 패턴 대신 아래 네 가지 방식으로 대체한다
 
