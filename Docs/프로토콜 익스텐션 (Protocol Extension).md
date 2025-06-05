@@ -5,9 +5,43 @@
 ## Description
 #### 개념
 - 프로토콜에 **기본 구현**을 제공하는 기능
+
+| 정의 가능 항목                             | 설명                             | 예시 코드                                           |
+| ------------------------------------ | ------------------------------ | ----------------------------------------------- |
+| 메서드 (Method)                         | 프로토콜에서 선언된 함수의 기본 동작 제공        | `func prepareForStudy() { ... }`                |
+| 계산 프로퍼티 (Computed Property)          | 저장은 못하지만 계산 결과를 반환하는 프로퍼티 제공   | `var motto: String { "Hello World" }`           |
+| 서브스크립트 (Subscript)                   | 특정 타입에 인덱싱 기능 제공               | `subscript(index: Int) -> String { ... }`       |
+| 중첩 타입 (Nested Type)                  | enum, struct, class 등 타입 내부 정의 | `enum StudyStyle { case silent, handsOn }`      |
+| 제약 조건이 걸린 확장 (Conditional Extension) | 특정 타입일 때만 적용                   | `extension Collection where Element: Equatable` |
 #### 장점
 - 공통 코드를 한 번에 정의하여 코드 중복을 방지하고 일관성을 유지하게 한다.
-### 예시
+
+### 기본 예시
+```swift
+protocol Describable {
+    var name: String { get }
+    func describe()
+}
+
+extension Describable {
+    // 메서드
+    func describe() {
+        print("This is \(name)")
+    }
+
+    // 계산 프로퍼티
+    var uppercasedName: String {
+        name.uppercased()
+    }
+
+    // 중첩 타입
+    enum Style {
+        case short, detailed
+    }
+}
+```
+
+### 현실 예시
 #### 1. 공통 기능을 묶은 `Ssg` 프로토콜
 ```swift
 protocol Ssg {
@@ -181,6 +215,6 @@ extension Collection where Element: Equatable {
 ## Keywords
 - [[Protocol-Oriented Programming (POP)]]
 + [[익스텐션 (Extension)]]
-
+- [[Equatable]]
 ## References
 - https://docs.swift.org/swift-book/documentation/the-swift-programming-language/protocols/#Protocol-Extensions
