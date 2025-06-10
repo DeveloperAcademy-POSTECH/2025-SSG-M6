@@ -182,6 +182,9 @@ struct ZoomScrollMapView: View {
 이 값을 바탕으로 앱은 지도 상태를 저장하거나, 외부 API 호출 등 로직을 트리거할 수 있습니다.
 (요기 Region 방식이 반영된 것을 볼 수 있음)
 
+제가 만들다가 발견했는데 .onChange는 **변화 감지가 가능한 Equatable을 채택한 타입**이어야만 작동한대요. 
+
+
 ##### Core Flow
 > **사용자 제스처 발생** -> region 변경 -> .onChange 트리거 -> 앱 로직 실행
 
