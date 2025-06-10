@@ -166,7 +166,7 @@ class SomeSubClass: SomeSuperClass, SomeProtocol {
 ## Protocol in Practice
 [[델리게이트 패턴 (Delegate Pattern)]]
 [[프로토콜 익스텐션 (Protocol Extension)]]
-[[Protocol-Oriented Programming (POP)]]
+[[POP (Protocol-Oriented Programming)]]
 ## Keywords
 + Property, Method, Initializer
 + Class, Struct, Enum

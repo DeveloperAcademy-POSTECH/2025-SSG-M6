@@ -213,7 +213,7 @@ extension Collection where Element: Equatable {
 |`String`, `Character`|문자열 비교 가능|
 |`Bool`|true/false 비교 가능|
 ## Keywords
-- [[Protocol-Oriented Programming (POP)]]
+- [[POP (Protocol-Oriented Programming)]]
 + [[익스텐션 (Extension)]]
 - [[Equatable]]
 ## References
