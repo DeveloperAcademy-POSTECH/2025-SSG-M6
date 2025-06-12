@@ -3,7 +3,7 @@
 >GQ2. MLX.. python도 있고 swift도 있고.. 어디서 불러오는 방식도 요상하고..
 
 ## Description
-MLX가 대체 뭔지 너무 궁금했습니다.  벌써 [[CoreML]] 다음의 머신러닝 프레임워크인가?
+MLX가 대체 뭔지 너무 궁금했습니다.  벌써 [[CoreML]] 다음의 [[머신 러닝 (Machine Learning)]] 프레임워크인가?
 
 MLX는 애플에서 만들고 애플 깃허브에 올린 공식 프로젝트긴 합니다. 다만 [[CoreML]], SwiftUI 등등 처럼 Apple 플랫폼 개발을 위한 공식 SDK 프레임워크는 아닙니다.
 

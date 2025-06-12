@@ -176,7 +176,7 @@ print(school.name) // APPLE ACADEMY
 
 ### 🫡 보너스 실무 예시 코드
 
-1. UserDefaults 연동
+1. [[UserDefaults]] 연동
 		앱 설정 저장시 사용
 ```swift
 @propertyWrapper
