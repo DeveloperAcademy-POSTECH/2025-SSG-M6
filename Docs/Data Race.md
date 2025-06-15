@@ -115,7 +115,7 @@ class LockCounter {
 
 #### - Actor 사용
 
-Swift Concurrency의 [[Actor]]는 기본적으로 데이터 경쟁 방지를 보장한다.
+Swift Concurrency의 [[액터 (Actor)]]는 기본적으로 데이터 경쟁 방지를 보장한다.
 actor 내부 상태는 직렬적으로 접근되기 때문에, 외부에서 동시에 접근하더라도 Data Race가 발생하지 않는다.
 
 - 장점
