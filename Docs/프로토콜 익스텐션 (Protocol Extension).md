@@ -135,7 +135,7 @@ protocol TeamLeader {
 #### 2. `TeamLeader`만 `giveScore()`를 쓸 수 있도록 조건부 제한걸기
 ```swift
 extension Ssg where Self: TeamLeader {
-    func giveScore(to member: Ssg) {
+    func giveScore() {
         print("\(self.name) 팀장이 \(member.name)에게 점수를 준다")
     }
 }
@@ -152,7 +152,7 @@ protocol Ssg {
 
 // MARK: - 팀장 전용 프로토콜 정의
 protocol TeamLeader {
-    func giveScore(to member: Ssg)
+    func giveScore()
 }
 
 // MARK: - TeamLeader만 사용할 수 있는 기능 제공 (프로토콜 확장 + 제약조건)
