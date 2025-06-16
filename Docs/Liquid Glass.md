@@ -15,7 +15,6 @@
 | ----------------------- | -------------------------------------------- | ------------------------------------------------------------------------------- |
 | **렌더링 엔진**              | Core Animation + Core Image blur layer       | Metal 기반 custom shader                                                          |
 | **구성 layer**            | 단일 blur layer + vibrancy + transparency mask | blur layer + tint layer + reflection layer + interactive layer (shader에서 모두 합성) |
-| **morphing / blending** | 없음 → mask는 고정                                | 있음 → shape geometry path blending + morphing                                    |
 
 > [!question] Metal shder
 > Metal은 애플의 GPU 전용 그래픽/연산 엔진이다
