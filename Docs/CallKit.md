@@ -156,3 +156,4 @@ Live Translation은 Apple Intelligence의 일부인 음성 언어 처리 스택 
 
 ## References
 - [CXSetTranslatingCallAction](https://developer.apple.com/documentation/callkit/cxsettranslatingcallaction)
+- [CallKit](https://developer.apple.com/documentation/callkit/)
