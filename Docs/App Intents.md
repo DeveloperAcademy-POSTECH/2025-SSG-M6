@@ -1,15 +1,14 @@
 ### 앱 인텐트(App Intent)란?
 
-WWDC 2022에서 AppIntents Framework로 소개 앱이 제공하는 주요 기능을 인텐트라는 형태로 정의하면, 
-사용자가 직접 실행하지 않아도 시스템 곳곳에서 그 기능을 바로 쓸수 있게 해주는 일종의 명령어 
+WWDC 2022에서 AppIntents Framework로 소개 앱이 제공하는 주요 기능을 인텐트(intent)라는 형태로 정의하면, 사용자가 직접 실행하지 않아도 시스템 곳곳에서 그 기능을 바로 쓸수 있게 해주는 일종의 명령어 입니다.
 
 예: 할일 추가, 음악 재생, 운동시작, 노트 열기
 
-"Siri야, 오늘 할 일 추가해줘 " -> 할 일  앱의 인텐트가 동작해서 바로 할 일이 추가됨.
+"Siri야, 오늘 할 일 추가해줘 " -> 할 일  앱의 인텐트가 동작해서 바로 할 일이 추가됩.
 
 
 ![[donate intents.jpg]]
-앱에서 특정 인텐트에 해당하는동작이 발생하면 donate()메서드를 통해 iOS Framework에 알려줄 수 있음
+앱에서 특정 인텐트에 해당하는동작이 발생하면 ==donate()== 메서드를 통해 iOS Framework에 알려줄 수 있습니다.
 
 ### 어떻게 쓸수 있나?
 
@@ -99,28 +98,28 @@ struct ShowLandmarkDetailIntent: AppIntent {
 
 ### Shortcuts Action
 
-- AppIntent를 구현하면 Shortcuts에서 Action으로 제공됨
-- 기본적인 형태는 이름, 동작부정도 구현하고 ==perform()== 메소드로 결과를 리턴하도록 되어 있음
+- AppIntent를 구현하면 Shortcuts에서 Action으로 제공됩니다.
+- 기본적인 형태는 이름, 동작부정도 구현하고 ==perform()== 메소드로 결과를 리턴하도록 되어 있습니다.
 
 
 ### Parameterized Action
 
 
-- 단순히 고정된 동작을 수행하는 것이 아닌, Action에 대한 세부 설정을 할수 있다. 
+- 단순히 고정된 동작을 수행하는 것이 아닌, Action에 대한 세부 설정을 할수 있습니다.
 	예 : 단순 카메라 화면 띄우기 아닌 특정 촬영모드로 카메라 촬영화면 띄우기
 
 
 ### Home Screen Widget
 
-- Widget 중에서 Configurable Widget이 있는데 , 여기에 ==AppIntentConfiguration, AppIntent, Entity==를 사용함
+- Widget 중에서 Configurable Widget이 있는데 , 여기에 ==AppIntentConfiguration, AppIntent, Entity==를 사용합니다.
 
 ### Control Center 
 
-- ==ControlWidget==를 상속받아 만들고 여기에 AppIntent를 활용
+- ==ControlWidget==를 상속받아 만들고 여기에 AppIntent를 활용합니다.
 
 ### Spotlight, Siri
 
-- ==AppShortcutsProvider==로 ==AppShortcut==을 제공하면 됨. AppShortcut은 intent를 지정해서알려주고, 이름, 아이콘, Siri를 위한 발화 인식 형태 리스트를 같이 전달하면 됨
+- ==AppShortcutsProvider==로 ==AppShortcut==을 제공하면 됨. AppShortcut은 인텐트를 지정해서알려주고, 이름, 아이콘, Siri를 위한 발화 인식 형태 리스트를 같이 전달하면 됩니다.
 - 참고 :  https://developer.apple.com/videos/play/wwdc2024/10133/
 
 
@@ -222,7 +221,7 @@ NavigateIntent: AppIntent {
 Interactive snippets는 App Intent를 기반으로 맞춤형 정보를 표시하는 dynamic view들입니다. 예를 들어 정원 가꾸기 앱에서 스프링클러를 켜는 것을 제안하거나 음식 주문 앱에서 주문 전에 주문을 요청할 수 있습니다.
 ==즉 앱을 켜지 않아도 앱의 핵심 동작을 실행 및 확인할 수 있습니다.==
 
-이런 기능은 'SnippetIntent' protocol을 사용하면 된다. 
+이런 기능은 'SnippetIntent' protocol을 사용하면 됩니다. 
 - (새로 추가) Result snipped
 - (새로 추가) Confirmation snippet 
 
@@ -277,7 +276,7 @@ struct LandmarkSnippetIntent: SnippetIntent {
 
 ```
 ```swift
-// 7. 버튼들로 intent 연결
+// 7. 버튼들로 인텐트 연결
 struct LandmarkView: View {
 	var body: some View {
 
@@ -349,18 +348,119 @@ struct performRequest(request: SearchRequestEntity) async throws {
 ### 2. New system intergrations
 
 
-이미지 검색 지원
+- Image search 
+	말그대로 이미지로 검색가능한 기능으로, search pannel이 나타나고 해당 이미지 선택하면 이미지로 인한 검색 결과가 나타납니다. 
+	
+<table>    
+<td><img src="이미지 서치 패널.png" width="200"></td> <td><img src="이미지 검색결과.png" width="200"></td>  
+</table>
 
-화면속 엔티티
+	 구현 방법은 IntentValueQeury 프로토콜을 사용하여 Image Search를 쿼리로 실행하고 
+	 SemanticContentDescriptor타입으로 입력하고 App Entity를 배열 
+	 형태로 반환하면 Image Search가 App Entity를 화면에 표시합니다. 사용자가 반환된 결과인 
+	 App Entity 선택하면 선택한 App Entity를 OpenIntent로 보냅니다. OpenIntent가 있지
+	 않으면 앱에서 Image Search의 결과를 절대로 볼수 없습니다.
+	 
+![[image search과정.png]]
 
-스포트라이트
+```swift
+// Image search 응답
+// 쿼리는 아래 구조체로 만들어서 실행
+struct LandmarkIntentValueQuery: IntentValueQeury {
+	
+	@Dependency var modelData: ModelData
 
+	func value(for input: SemanticContentDescriptor) async throws -> [LandmarkEntity] { // 반드시 SemanticContentDescriptor 타입으로 입력해야함
+	
+		guard let pixelBuffer: CVReadOnlyPixelBuffer = input.pixelBuffer else { // 선택한 영역을 pixel로 넘겨줌
+			return [] // 매치된 entitiy 결과는 반드시 배열로 반환
+		}
+		
+		let landmarks = try await modelData.searchLandmarks(matching: pixelBuffer)
+
+		return landmarks
+	}
+}
+
+
+// AppEntity 열기
+// 사용자가 탭한 결과를 보여주는 OpenIntent 프로토콜을 준수하는 인텐트 구현
+// OpenIntent는 Image search 뿐만아니라 Spotlight도 지원함
+struct OpenLandmarkIntent: OpenIntent { 
+	static var title:LocalizedStringResource = "랜드마크 열기"
+
+	@Parameter(title: "랜드마크")
+	var target: LandmarkEntity // 반드시 결과와 타입이 같아야 함
+
+	func perform() async throws -> some IntentResult {
+		...
+	}
+}
+```
+
+- Onscreen Entities
+	NSUserActivities 사용하여 앱에 엔티티를 화면 콘텐츠와 연결하여 현재 앱에 표시 할수 있습니다. 예를 들어 지도 앱에서 폭포를 보던중에 Siri로 가까이 있는 호수를 찾아달라고 물어보면 폭포와 연관된 호수를 찾아줍니다. 그리고 스크린샷으로 chatGPT에게 보내고 결과의 응답이 화면으로 표시 됩니다.  
+
+```swift
+// AppEntity를 View에 연결
+
+struct LandmarkDetailView: View {
+
+	let landmark: LandmarkEntity
+
+	var body: some View {
+		Group{/*..*/}
+		.userActivity("com.landmarks.ViewingLandmark") { activity in
+			activity.title = "Viewing \(landmark.name)" 
+			activity.appEntityIdentifier = EntityIdentifier(for: landmark) // EntityIdentifier로 activity 연결
+		}
+	}
+}
+
+// chatGPT가 이해할수 있게 LandmarkEntity를 Data type로 converting 예를 들면 pdf
+// AppEntity를 pdf로 converting 하기
+import CoreTransferable
+import PDFkit
+
+extension LandmarkEntity: Transferable { 
+	static var transferRepresentation: some TransferRepresentation {
+		DataRepresentation(exportedContentType: .pdf) { landmark in
+			// Create PDF data...
+			return data
+		}
+	}
+}
+
+
+```
+- Spotlight
+	Spotlight가 검색 필터링 환경을 주도할 수 있도록 IndexedEntity로 확인하고 Spotlight로 넘깁니다.
+	
+```swift
+// 프로퍼티를 spotlight key로 연결
+struct LandmarkEntity: IndexedEntity {
+	// ...
+	@Property(indexingkey: \.displayName)
+	var name: String
+
+	@Property(customIndexingKey: /*...*/)
+	var continent: String 
+}
+```
+
+	엔티티로 화면 콘텐츠에  Annotate를 달면 해당 엔티티가 View에 표시될 때 제안에서 우선 순위가 
+	지정됩니다.
+
+	PredictableIntent 실행하면 시스템이 학습하고 기본적으로 사용자의 이전 행동을 바탕으로 
+	intent와 prameter을 제안하여 제공합니다. 
+
+	value에 따라 맞춤형 설명도 제공 가능합니다. 
 
 ### 3.User experience refinements
 
 - undo
 
-	Intent를 이전으로 다시 복구되는 기능으로  UndoableIntnet protocol을 사용하여 코드를 구현하면 됨
+	인텐트를 이전으로 다시 복구되는 기능으로  UndoableIntnet protocol을 사용하여 코드를 구현하면 됩니다. 
 
 ```swift
 // 인텐트 undo 가능하게 하기
@@ -382,7 +482,7 @@ await undoManager?.registerUndo(withTarget: modelData) { modelData in
 
 - Multiple Choice
 
-	사용자에게 여러 선택 옵션을 제공하기 위한 API
+	사용자에게 여러 선택 옵션을 제공하기 위한 API 입니다.
 
 
 ```swift
@@ -412,7 +512,7 @@ struct DeleteCollectionIntent: UndoableIntent {
 ```
 - Supported Modes
 
-	foregrouding 상태에서 인텐트를 좀더 멋지게 제어하는 방법
+	foregrouding 상태에서 인텐트를 좀더 멋지게 제어하는 방법입니다.
 
 ```swift
 	struct GetCrowdStatusIntent: AppIntent {
@@ -430,14 +530,14 @@ struct DeleteCollectionIntent: UndoableIntent {
 
 ```
 
-background 모드와  3가지 foreground 모드를 제공함
+background 모드와  3가지 foreground 모드를 제공합니다.
 
 Foreground
 - Immediate :  인텐트 실행전에  시스템에게 앱을 foreground 하라고 지시 (즉시 실행)
 - Dynamic: 인텐트가 앱의 실행여부를 결정하도록 허용함 (앱을 실행하지 않는다면 이걸 선택)
 - deferred: 인텐트가 앱을 결국 foreground될것이라  표시  (즉시 실행은 아님)
 
-위 2가지 모드는 continueInForeground 메서드를 사용하면 앱을 forward 할때 정확하게 제어가 가능함
+위 2가지 모드는 continueInForeground 메서드를 사용하면 앱을 forward 할때 정확하게 제어가 가능합니다.
 
 
 ```swift
@@ -467,10 +567,10 @@ Foreground
 
 - View Control
 
-	앱 인텐트가 UI navigation을 사용하려면 View들 구동하는 모든 앱상태에 access가 가능해야 하는데,  전역으로 사용하는 AppDependencie 또는 singleton과 같은 shared objects로 해결했다. 그러나 새로운 View Control API를 사용하면 그딴 코드는 이제 날려도 됨
+	앱 인텐트가 UI navigation을 사용하려면 View들 구동하는 모든 앱상태에 access가 가능해야 하는데,  전역으로 사용하는 AppDependencie 또는 singleton과 같은 shared objects로 해결했습니다. 그러나 새로운 View Control API를 사용하면 그딴 코드는 이제 날려도 됩니다.
 	
 	onAppIntentExecution는 앱이 foreground 전에 실행, 인텐트 파라미터로만 읽고, 모든 활성화된 
-	뷰들의 각각 이벤트를 받을수 있음 
+	뷰들의 각각 이벤트를 받을수 있습니다.
 
 ```swift
 // targetContentProvidingIntent
@@ -515,7 +615,7 @@ struct OpenLandmarkIntent: OpenIntent {
 extension OpenLandmarkIntent: TargetContentProvidingIntent {}
 
 ```
-	handlesExternalEvents로 화면에 인텐트 활성화 조건을 설정 할 수 있음
+	handlesExternalEvents로 화면에 인텐트 활성화 조건을 설정 할 수 있습니다.
 ```swift
 
 // 예시 1 Scene activation condition
@@ -542,18 +642,18 @@ struct LandmarksNavigationStack: View {
 	} 
 }
 ```
-	uikit을 사용하는 경우 
+	uikit을 사용하는 경우에는
 	UISceneAppIntent 로 앱 인텐트를 확인
 	uiScene과 performNavigation(forScene:) scenes을 제어
 	AppIntentSceneDelegate로 Scene delegate 확인
 	func scene(willPerformAppIntent:) 이벤트 제어
-	UISceneActivationConditions로 조건 설정
+	UISceneActivationConditions로 조건 설정 하면 됩니다.
 
 
 
 - Computed Property 매크로
 
-	Property를 AppEntity에 값을 저장하지 않고 사용하기위해 사용
+	Property를 AppEntity에 값을 저장하지 않고 사용하기위해 사용합니다.
 
 ```swift
 
@@ -586,7 +686,7 @@ struct SettingEntity: UniqueAppEntity {
 
 - Deferred Property 매크로
 
-	낮은 비용으로 AppEntity를 인스턴스화함
+	낮은 비용으로 AppEntity를 인스턴스화합니다/
 
 ```swift
 
@@ -612,7 +712,9 @@ struct LandmarkEntity: IndexedEntity {
 ```
 
 - Swift Package
-	 Swift Package과 static library로 사용 가능 
+	 Swift Package과 static library로 사용 가능합니다. 
+
+![[swift package.png]]
 
 
 ```swift
