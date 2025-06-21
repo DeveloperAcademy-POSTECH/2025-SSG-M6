@@ -8,7 +8,7 @@
 
 ## ShazamKit이 뭔데 !
 
-<font color="palevioletred">Shazamkit</font>은 오디오 샘플을 <font color="palevioletred">Shazamkit</font> 카탈로그 또는 사용자 설정 오디오 카탈로그와 일치 시켜 오디오 인식을 지원합니다. 
+<font color="palevioletred">Shazamkit</font>은 오디오 샘플을 <font color="palevioletred">Shazamkit</font> 카탈로그 또는 사용자 설정 오디오 카탈로그와 일치 시켜 오디오 인식을 지원하는 [[프레임워크 (Framework)]]입니다.
 
 ![[ShazamKitPlatform.png]]
 다 지원이 됩니다. 🫳🏻 🫳🏻
