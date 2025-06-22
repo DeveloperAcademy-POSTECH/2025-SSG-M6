@@ -85,6 +85,60 @@ var doubled: [Int] = []
 arr.forEach { doubled.append($0) }
 ```
 
+#### ✅ 벤치마킹 돌려본 결과 
+
+* `reduce`는 O(n^2) → 매번 새 배열 생성 때문에 느림
+* `reduce(into:)`는 O(n) → 기존 배열을 수정, 빠름
+* `map`, `for`, `forEach` 모두 O(n)
+	* 대신 `for` 를 사용하면 일정 개수가 넘으면 새 메모리 블록을 복사해야해서 시간 소모가 발생
+
+```Swift
+import Foundation
+
+let arr = Array(1...100)
+
+func benchmark(name: String, block: () -> Void) {
+    let start = CFAbsoluteTimeGetCurrent()
+    block()
+    let end = CFAbsoluteTimeGetCurrent()
+    let time = (end - start) * 1000
+    print("\(name): \(String(format: "%.2f", time)) ms")
+}
+
+benchmark(name: "reduce") {
+    _ = arr.reduce([]) { $0 + [$1 * 2] }
+}
+
+benchmark(name: "reduce(into:)") {
+    _ = arr.reduce(into: []) { $0.append($1 * 2) }
+}
+
+benchmark(name: "map") {
+    _ = arr.map { $0 * 2 }
+}
+
+benchmark(name: "for") {
+    var result: [Int] = []
+    for i in 0..<arr.count {
+        result.append(arr[i] * 2)
+    }
+}
+
+benchmark(name: "forEach") {
+    var result: [Int] = []
+    arr.forEach { result.append($0 * 2) }
+}
+
+/*
+	reduce: 30.20 ms
+	reduce(into:): 0.38 ms
+	map: 0.29 ms
+	for: 9.51 ms
+	forEach: 0.58 ms
+*/
+
+```
+
 ## References
 ---
 * [Apple Developer Documentation – reduce(_:_:)](https://developer.apple.com/documentation/swift/sequence/reduce\(_:_:\))
