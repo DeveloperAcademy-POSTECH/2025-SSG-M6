@@ -1,6 +1,6 @@
 >[!question]
 >GQ1. 제네릭은 재사용을 넘어서 어떤 장점이 있을까?
->GQ2. associatedType과 제네릭 타입 파라미터의 차이는 뭘까?
+>GQ2. associatedtype과 제네릭 타입 파라미터의 차이는 뭘까?
 >GQ3. Variadic Generics는 기존 제네릭과 뭐가 다를까?
 
 ## 제네릭이란?
@@ -142,7 +142,7 @@ protocol Container {
 
 
 
-## associatedType과 제네릭 타입 파라미터의 차이는 뭘까?
+## associatedtype과 제네릭 타입 파라미터의 차이는 뭘까?
 
 | 구분           | 제네릭 파라미터 (`<T>`)               | `associatedtype`                            |
 | ------------ | ------------------------------ | ------------------------------------------- |
@@ -152,7 +152,7 @@ protocol Container {
 | **문법**       | `func swap<T>(_ a: T, _ b: T)` | `protocol Stack { associatedtype Element }` |
 | **다형성 활용**   | `T: Equatable` 등 타입 제약 명시      | `associatedtype Element: Equatable`처럼 제약 가능 |
 
-위에서 제네릭은 많이 다루었으니 associatedType에 대해서 더 알아보자면
+위에서 제네릭은 많이 다루었으니 associatedtype에 대해서 더 알아보자면
 
 ```swift
 protocol Stack {
@@ -179,7 +179,7 @@ struct IntStack: Stack {
  
  Stack이라는 프로토콜은 하나의 제네릭 개념을 담고 있어요, 근데 Swift의 프로토콜 자체는 제네릭 파라미터를 받을 수 없어요.
  
- 그래서 associatedType Element를 선언해 **이 프로토콜이 다루는 타입은 어떤 것이든 정의될 수 있다**고 선언합니당 -> 나는 어떤 타입을 다룰 건데, 그 타입은 이 프로토콜이 채택하는 사람이 나중에 정해줘 ! 입니다
+ 그래서 associatedtype Element를 선언해 **이 프로토콜이 다루는 타입은 어떤 것이든 정의될 수 있다**고 선언합니당 -> 나는 어떤 타입을 다룰 건데, 그 타입은 이 프로토콜이 채택하는 사람이 나중에 정해줘 ! 입니다
 
 프로토콜에서는 제네릭 파라미터 사용이 불가능하기 때문에 연관 타입이 프로토콜 제네릭의 유일한 방법이라 사용합니당
 
