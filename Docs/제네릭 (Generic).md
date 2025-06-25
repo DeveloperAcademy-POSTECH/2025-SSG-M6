@@ -205,7 +205,7 @@ describeTwo(1, "Hello")
 
 Variadic Generic 방식은
 ```swift
-func describeAll<Types...>(_ values: Types...) {
+func describeAll(_ values: Any...) {
     for value in values {
         print("타입은 \(type(of: value)), 값은 \(value)")
     }
