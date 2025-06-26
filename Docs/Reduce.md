@@ -26,6 +26,8 @@ let words = ["Swift", "UIKit", "SwiftUI"]
 let sentence = words.reduce("") { $0 + " " + $1 } // Swift UIKit SwiftUI
 ```
 
+>[!question] 왜 `reduce(0, +)` 처럼 "+" 하나만 줬는데 돌아가나요?
+>Swift에서는 (Int, Int) → Int 타입의 함수이기 때문에 
 
 ## 성능 주의점
 ---
@@ -141,5 +143,5 @@ benchmark(name: "forEach") {
 
 ## References
 ---
-* [Apple Developer Documentation – reduce(_:_:)](https://developer.apple.com/documentation/swift/sequence/reduce\(_:_:\))
-* [Apple Developer Documentation – reduce(into:_:)](https://developer.apple.com/documentation/swift/sequence/reduce\(into:_:\))
+* [Apple Developer Documentation – reduce(_:_:)](https://developer.apple.com/documentation/swift/array/reduce(_:_:))
+* [Apple Developer Documentation – reduce(into:_:)](https://developer.apple.com/documentation/swift/array/reduce(into:_:))
