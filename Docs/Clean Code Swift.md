@@ -633,100 +633,21 @@ class User {
 
 ## Clean Code (4) : Classes
 ---
-##### 1️⃣ Method Chaining
+##### 1️⃣ Method Chaining ⭐️
 
-+ 실제 활
++ **메서드 체이닝**은 여러 메서드를 `.` 으로 이어서 호출할 수 있도록 각 메서드가 **self** 를 반환하게 만드는 패턴입니다.
++ 코드의 가독성을 높이고, 각 단계가 동일한 검증과 캡슐화 과정을 높일 수 있다는 점에서 장점이 있죠.
 
-```Swift
-// ❌ BAD 
-// 
 
-// ✅ GOOD 
-// 
+##### 2️⃣ Prefer Composition Over Inheritance ⭐️⭐️
 
-```
-
-##### 2️⃣ Prefer Composition Over Inheritance
-
-+ 실제 활
-
-```Swift
-// ❌ BAD 
-// 
-
-// ✅ GOOD 
-// 
-
-```
++ **상속(Inheritance)** 보다 **구성(Composition)** 을 선호하라는 의미입니다.
 
 
 
 ## Clean Code (5) : SOLID
----
-##### 1️⃣ Single Responsibility Principle (SRP)
 
-+ 실제 활
-
-```Swift
-// ❌ BAD 
-// 
-
-// ✅ GOOD 
-// 
-
-```
-
-##### 2️⃣ Open/Closed Principle (OCP)
-
-+ 실제 활
-
-```Swift
-// ❌ BAD 
-// 
-
-// ✅ GOOD 
-// 
-
-```
-
-##### 3️⃣ Liskov Substitution Principle (LSP)
-
-+ 실제 활용을 작성
-
-```Swift
-// ❌ BAD 
-// 
-
-// ✅ GOOD 
-// 
-
-```
-
-##### 4️⃣ Interface Segregation Principle (ISP) with Protocols
-
-+ 실제 활용을 작성
-
-```Swift
-// ❌ BAD 
-// 
-
-// ✅ GOOD 
-// 
-
-```
-
-##### 5️⃣ Dependency Inversion Principle (DIP)
-
-+ 실제 활용을 작성
-
-```Swift
-// ❌ BAD 
-// 
-
-// ✅ GOOD 
-// 
-
-```
+[[SOLID 원칙]]
 
 
 
@@ -736,17 +657,45 @@ class User {
 
 ## Clean Code (7) : Concurrency
 ---
-##### Async/Await is even cleaner than Promises
+##### Async/Await is even cleaner than Promises ⭐️⭐️
 
-+ 실제 활용을 작성
++ [[비동기 (Asynchronous)]] 처리에서 기존 [[GCD (Grand Central Dispatch)]] 방식보다, 신규 async/await 방식을 사용하라는 너무나도 당연한 이야기입니다.
++ 콜백이 없다는 점에서 가독성이 뛰어나고, 명령형 스타일이고, 에러 처리를 통합하기도 좋기 때문이죠.
 
 ```Swift
 // ❌ BAD 
-// 
+let url = URL(string: "https://en.wikipedia.org/wiki/Robert_Cecil_Martin")!
+
+URLSession.shared.dataTask(with: url) { (data, response, error) in
+    guard let data = data, error == nil else {
+        print(error?.localizedDescription ?? "Unknown error")
+        return
+    }
+
+    do {
+        try data.write(to: URL(fileURLWithPath: "article.html"))
+        print("File written")
+    } catch {
+        print(error.localizedDescription)
+    }
+}.resume()
 
 // ✅ GOOD 
-// 
+func getCleanCodeArticle() async {
+    let url = URL(string: "https://en.wikipedia.org/wiki/Robert_Cecil_Martin")!
 
+    do {
+        let (data, _) = try await URLSession.shared.data(from: url)
+        try await data.write(to: URL(fileURLWithPath: "article.html"))
+        print("File written")
+    } catch {
+        print(error.localizedDescription)
+    }
+}
+
+Task {
+    await getCleanCodeArticle()
+}
 ```
 
 
@@ -755,15 +704,25 @@ class User {
 ---
 ##### Don't ignore caught errors
 
-+ 실제 활용을 작성
++ 에러를 잡아놓고 아무것도 하지 않으면 안된다는 것입니다.
++ 즉, `do-catch` 블록에서 [[에러 처리 (Error Handling)]]를 목적으로 예상을 했는데, `catch` 구문에서 아무것도 하지 않으면 / 아무런 동작을 수행할 수 없는 앱이 되버리는 셈이기 때문이죠.
 
 ```Swift
 // ❌ BAD 
-// 
+do {
+   try funcThatMightThrow()
+} catch {
+    print(error)
+}
 
 // ✅ GOOD 
-// 
-
+do {
+    try funcThatMightThrow()
+} catch {
+    notifyUserOfError(error)  // 사용자에게 알림
+    reportErrorToService(error)  // 오류 로깅 서비스에 전송 
+    retryOperation()  // 그리고 작동 재시도
+}
 ```
 
 
