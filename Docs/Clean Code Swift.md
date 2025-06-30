@@ -729,129 +729,128 @@ do {
 
 ## Clean Code (9) : Formatting
 ---
-##### 1️⃣ Use spaces instead of tabs
+코드 포맷팅은 주관적인 영역 (subjective)이라고 소개합니다.
+팀마다 규칙이 달라질 수 있는 부분이기에, SwiftLint 같은 자동화 도구를 사용해 잡는 것을 권장합니다.
 
-+ 실제 활
+여기서는 자세하게 규칙을 이해하기보다 그냥 러프하게 보면서 지나가도록 합시다.
 
-```Swift
-// ❌ BAD 
-// 
+##### 1️⃣ Use spaces instead of tabs : 탭보다 스페이스를 사용하는 방식
 
-// ✅ GOOD 
-// 
+##### 2️⃣ Use black lines effectively : 빈줄을 사용해 시각적으로 구분. 단 남발하지는 말것.
 
-```
+##### 3️⃣ Limit line length : 코드 한 줄의 길이를 80자 내외로 제한해, 수평 스크롤 시 읽기 쉽게할 것.
 
-##### 2️⃣ Use black lines effectively
+##### 4️⃣ Use consistent spacing : 연산자(+, :)나 콤마(,) 뒤에 적절하게 띄어쓰기를 쓸 것.
 
-+ 실제 활
+##### 5️⃣ Avoid excessive whitespace : 과도한 공백을 사용하지 말 것.
 
-```Swift
-// ❌ BAD 
-// 
-
-// ✅ GOOD 
-// 
-
-```
-
-##### 3️⃣ Limit line length
-
-+ 실제 활용을 작성
-
-```Swift
-// ❌ BAD 
-// 
-
-// ✅ GOOD 
-// 
-
-```
-
-##### 4️⃣ Use consistent spacing
-
-+ 실제 활용을 작성
-
-```Swift
-// ❌ BAD 
-// 
-
-// ✅ GOOD 
-// 
-
-```
-
-##### 5️⃣ Avoid excessive whitespace
-
-+ 실제 활용을 작성
-
-```Swift
-// ❌ BAD 
-// 
-
-// ✅ GOOD 
-// 
-
-```
-
-##### 6️⃣ Follow the formatting recommended by SwiftLint
-
-+ 실제 활용을 작성
-
-```Swift
-// ❌ BAD 
-// 
-
-// ✅ GOOD 
-// 
-
-```
+##### 6️⃣ Follow the formatting recommended by SwiftLint : 되도록 그냥 Lint 쓰세요 ~
 
 
 
 ## Clean Code (10) : Comments
 ---
-##### 1️⃣ Only comment on things that have business logic complexity
+##### 1️⃣ Only comment on things that have business logic complexity ⭐️⭐️⭐️
 
-+ 실제 활
++ 주석을 남용하는 것은 좋지 않다는 뜻입니다.
++ 주석은 코드에서 "명확하지 않은 복잡한 비즈니스 로직" 또는 "특별히 다른 개발자들에게 의도를 알려야하는 부분"에만 사용하는 것을 권장합니다.
++ 코드만 보고도 알 수 있는 부분에는 주석을 붙이지 않는 것이 좋습니다!
+
+- 잘못된 주석은 주석이 없는 것보다 더 위험할 수 있죠.
+  -> 주석이 많을수록 코드를 유지보수 해나가면서 코드와 주석이 불일치하는 경우가 자주 발생할 수 있습니다.
 
 ```Swift
 // ❌ BAD 
-// 
+func calculateTotalScore(score: Int) {
+  // Initialize the total score
+  var totalScore = 0
+
+  // Loop through each individual score
+  for i in 1...score {
+    // Add the individual score to the total score
+    totalScore += i
+  }
+
+  // Print the total score
+  print("The total score is: \(totalScore)")
+}
 
 // ✅ GOOD 
-// 
-
+func calculateTotalScore(score: Int) {
+    // The total score is calculated using the Gauss sum formula
+    let totalScore = (score * (score + 1)) / 2
+    print("The total score is: \(totalScore)")
+}
 ```
 
-##### 2️⃣ Don't leave commented-out code in your codebase
+##### 2️⃣ Don't leave commented-out code in your codebase ⭐️⭐️⭐️
 
-+ 실제 활
++ 사용하지 않는 코드를 주석처리한채로 소스코드에 남겨두지 말라는 것입니다.
++ 쓰지 않는 코드가 남겨있으면 가독성이 훅 떨어지니까요 !
 
 ```Swift
 // ❌ BAD 
-// 
+func doSomething() {
+    // Previous code that is no longer needed
+    // ...
+    /*
+    if someCondition {
+        // Code to be executed
+    }
+    */
+}
 
 // ✅ GOOD 
-// 
-
+func doSomething() {
+    // 현재 필요한 코드만!
+}
 ```
 
-##### 3️⃣ Avoid change markers
+##### 3️⃣ Avoid change markers ⭐️
 
-+ 실제 활용을 작성
++ 구분용 주석 (슬래시 또는 별표 라인)을 피하라는 것을 의미합니다. (나는 자주 쓰는데...)
++ 좋은 코드 구조가 있다면, 적절한 공백만으로도 충분히 구분할 수 있기 때문이라고는 하는데.. 사실 상황에 맞춰서 적절하게 사용하는 것이 좋을 것 같네요.
++ 과도할 필요는 없다고 봅니다 !
 
 ```Swift
 // ❌ BAD 
-// 
+struct Example {
+    // MARK: - Properties
+    var name: String
+    var age: Int
+
+    // MARK - Initializer
+    init(name: String, age: Int) {
+        self.name = name
+        self.age = age
+    }
+
+    // MARK - Functions
+    func performAction() {
+        // ...
+    }
+}
 
 // ✅ GOOD 
-// 
+struct Example {
+    var name: String
+    var age: Int
 
+    init(name: String, age: Int) {
+        self.name = name
+        self.age = age
+    }
+
+    func performAction() {
+        // ...
+    }
+}
 ```
 
 
 
 ## References
 
-- 참고한 레퍼런스를 작성 (예 : Apple의 공식 문서)
+- [Clean Code Adapted for Swift](https://github.com/MaatheusGois/clean-code-swift?tab=readme-ov-file#formatting)
+- [Medium - Clean and Efficient Swift: A Comprehensive Guide to Writing Impeccable Code with Clean Code](https://medium.com/@maatheusgois/clean-and-efficient-swift-a-comprehensive-guide-to-writing-impeccable-code-with-clean-code-e04f31832da1)
+- [Medium - Writing Clean Code With Swift — 7 Essential Tips!](https://medium.com/@EshwarSatrasala/writing-clean-code-with-swift-7-essential-tips-7e18d9ca5590)
