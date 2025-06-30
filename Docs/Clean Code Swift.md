@@ -141,7 +141,7 @@ class User {
 
 ## Clean Code (2) : Functions
 ---
-##### 1️⃣ Function Arguments (Max 2 params)
+##### 1️⃣ Function Arguments (Max 2 params) ⭐️
 
 + 함수 파라미터는 최대 2개까지만 설정하라는 의미입니다.
 
@@ -162,7 +162,7 @@ struct MenuViewData {
 func createMenu(viewData: MenuViewData) { ... }
 ```
 
-##### 2️⃣ Use Default Arguments Instead of Short-Circuiting or Using Conditionals
+##### 2️⃣ Use Default Arguments Instead of Short-Circuiting or Using Conditionals ⭐️
 
 + ??나 조건문을 사용하기보다, 함수의 기본 파라미터를 사용하는 것을 권장합니다.
 + 코드의 "논리"가 추가됨으로써 코드의 흐름을 따라가기 어려워지는 부분이 존재하기 때문이죠.
@@ -180,7 +180,7 @@ func createMicrobrewery(breweryName: String = "Hipster Brew Co.") {
 }
 ```
 
-##### 3️⃣ Functions Should Do One Thing
+##### 3️⃣ Functions Should Do One Thing ⭐️⭐️
 
 - 함수는 한 가지 일만 하도록 선언합니다.
 - 단일 책임 원칙 (SRP)에 부합하기 때문에 너무나도 알고 있는 내용이지만, 막상 구현하다보면 쉽게 적용하기가 어려운 내용인 것 같아요. 아무튼 클린 코드 원칙에서는 중요합니다!
@@ -254,7 +254,7 @@ func saveData(data: Data) {
 }
 ```
 
-##### 6️⃣ Remove Duplicated Code
+##### 6️⃣ Remove Duplicated Code ⭐️⭐️
 
 + 중복 코드를 제거하라는 원칙입니다. 너무도 당연!
 + 이 부분에서는 [[열거형 (enum)]]을 활용해서 역할별 로직을 분리하는 방식이 코드의 중복을 줄이는데 도움을 줄 수 있을 것 같네요 !
@@ -292,7 +292,7 @@ func showPerson(name: String, role: Role) {
 }
 ```
 
-##### 7️⃣ Avoid Using Flags as Function Parameters
+##### 7️⃣ Avoid Using Flags as Function Parameters ⭐️
 
 + Bool 값 (true/false)을 통해 프로그램의 흐름 (로직)을 분기처리하는 Flag를 함수의 매개변수로 사용하지 말 것을 소개합니다.
 + Bool flag가 함수의 파라미터라는 것은 "이 함수가 두 가지 이상의 역할을 한다"는 신호이기 때문이죠.
@@ -320,7 +320,7 @@ func createPermanentFile(name: String) {
 }
 ```
 
-##### 8️⃣ Avoid Side Effects
+##### 8️⃣ Avoid Side Effects ⭐️⭐️
 
 + Side Effect란 "함수가 입력값만 받아 리턴값만 반환하는 것이 아니라, 외부 상태 (ex 전역)를 변경하거나 의존하는 것"을 의미합니다.
 + 함수에서 발생하는 Side Effect는 발생하지 않도록 하라는 것이 요지입니다.
@@ -345,86 +345,164 @@ func splitIntoFirstAndLastName(name: String) -> (firstName: String, lastName: St
 }
 ```
 
-##### 9️⃣ Do Not Write to Global Functions
+##### 9️⃣ Do Not Write to Global Functions ⭐️
 
-+ 실제 활
++ Swift에서는 [[익스텐션 (Extension)]]을 사용하면 공통 타입에 전역으로 사용하는 함수를 추가할 수 있는데, 
+  무분별한 확장을 하지말도록 소개하고 있습니다.
++ 기존 라이브러리, 프레임워크와의 충돌 가능성이 높다는 이유죠.
 
 ```Swift
 // ❌ BAD 
-// 
+extension Array {
+  func diff(_ comparisonArray: [Element]) -> [Element] {
+    let hash = Set(comparisonArray)
+    return filter { !hash.contains($0) }
+  }
+}
 
 // ✅ GOOD 
-// 
+// 별도의 확장된 기능을 제공하는 타입 (ExtendedArray)을 만들어 사용하면 해결 !
+struct ExtendedArray<Element> {
+    var elements: [Element]
 
+    func diff(_ comparisonArray: [Element]) -> [Element] {
+        let hash = Set(comparisonArray)
+        return elements.filter { !hash.contains($0) }
+    }
+}
 ```
 
-##### 🔟 Favor Functional Programming over Imperative Programming
+##### 🔟 Favor Functional Programming over Imperative Programming ⭐️⭐️
 
 + 명령형 프로그래밍 (Imperative Programming)보다 함수형 프로그래밍 (Functional Programming) 방식을 사용하라고 설명합니다.
+	+ 명령형 프로그래밍 : 컴퓨터가 무엇을 할지를 단계별로 개발자가 직접 명령을 내리는 방식
+	+ 함수형 프로그래밍 : 개발자는 무엇을 하는지 선언만 하고, 실제 어떻게 하는지는 라이브러리가 알아서 하도록 맡기는 방식
++ 의도가 더 명확하게 드러나고, 상태의 변경과정 없이 새로운 변환된 값만 받아 사용하는 것이 불변성 (immutable) 유지 측면에서 장점을 갖기 때문입니다.
 
 ```Swift
 // ❌ BAD 
-// 
+// for 루프를 통해 직접 하나하나 상태를 변경하는 방법은 명령형 방식
+var totalOutput = 0
+for programmer in programmerOutput {
+  totalOutput += programmer.linesOfCode
+}
 
 // ✅ GOOD 
-// 
-
+// map, filter, reduce 같은 고차 함수를 사용해 데이터 흐름을 선언적으로 표현하는 방법은 함수형 방식
+let totalOutput = programmerOutput
+  .map { $0.linesOfCode }
+  .reduce(0, +)
 ```
 
-##### 1️⃣1️⃣ Encapsulate Conditionals
+##### 1️⃣1️⃣ Encapsulate Conditionals ⭐️
 
-+ 실제 활
++ 조건문이 복잡하다면, 별도의 함수로 분리해 사용하는 방법을 권장합니다.
 
 ```Swift
 // ❌ BAD 
-// 
+if fsm.state == "fetching" && isEmpty(listNode) { ... }
 
 // ✅ GOOD 
-// 
+func shouldShowSpinner(fsm: FSM, listNode: Node) -> Bool {
+  return fsm.state == "fetching" && isEmpty(listNode)
+}
 
+if shouldShowSpinner(fsm: fsmInstance, listNode: listNodeInstance) { ... }
 ```
 
-##### 1️⃣2️⃣ Avoid Negations in Conditionals
+##### 1️⃣2️⃣ Avoid Negations in Conditionals ⭐️⭐️
 
-+ 실제 활
++ 부정을 의미하는 함수와 조건을 설정하지 않습니다.
++ 부정 (!)이 들어간다는 것은 코드를 이해하기까지의 과정이 하나 더 추가되는 느낌이기 때문이죠.
 
 ```Swift
 // ❌ BAD 
-// 
+func isViewNotPresent(view: UIView) -> Bool { ... }
+if !isViewNotPresent(view: view) { ... }
 
 // ✅ GOOD 
-// 
-
+func isViewPresent(view: UIView) -> Bool { ... }
+if isViewPresent(view: view) { ... }
 ```
 
-##### 1️⃣3️⃣ Avoid Conditionals
+##### 1️⃣3️⃣ Avoid Conditionals ⭐️
 
-+ 실제 활
++ 조건문으로 분기처리하지 말고, 객체의 다형성 (Polymorphism) 특징으로 해결할 것을 권장합니다.
++ 개인적으로는 객체의 다형성을 상속으로 구현하는 방법보다 / 프로토콜 (정의와 프로토콜 익스텐션)을 활용하는 것이 Swift에 더 적합하다고 생각이 드는군요.
 
 ```Swift
 // ❌ BAD 
-// 
+class Airplane {
+  func getCruisingAltitude() -> Int {
+    switch self.type {
+      case "777": return self.getMaxAltitude() - self.getPassengerCount()
+      case "Air Force One": return self.getMaxAltitude()
+      case "Cessna": return self.getMaxAltitude() - self.getFuelExpenditure()
+      default: return 0
+    }
+  }
+}
 
 // ✅ GOOD 
-// 
+protocol Airplane {
+  func getCruisingAltitude() -> Int
+}
 
+class Boeing777: Airplane {
+  func getCruisingAltitude() -> Int {
+    return getMaxAltitude() - getPassengerCount()
+  }
+}
+
+class AirForceOne: Airplane {
+  func getCruisingAltitude() -> Int {
+    return getMaxAltitude()
+  }
+}
 ```
 
-##### 1️⃣4️⃣ Avoid Type Checking
+##### 1️⃣4️⃣ Avoid Type Checking ⭐️⭐️
 
 + `is` `as?` 와 같은 수동 타입 체킹을 함수에서 사용하는 상황을 피하라는 뜻입니다.
-+ 만약, 
++ 수동 타입 체크는 보통 코드에 "잘못된 설계 신호"를 의미하는 것일 수 있기 때문이죠.
+	+ 메서드는 수동으로 타입을 체크하기 위해, 타입일 수 있는 모든 로직을 직접 다 알고 있어야 합니다.
+	+ 만약 새로운 타입이 생긴다면? 그에 따른 조건 분기가 하나 더 추가가 되어야만 하겠죠.
+	+ 확장에 닫혀있고, 변경에 열려있다는 점에서 OCP 원칙 위반입니다.
 
 ```Swift
 // ❌ BAD 
-// 
+func travelToTexas(vehicle: Any) {
+    if let bicycle = vehicle as? Bicycle {
+        bicycle.pedal()
+    } else if let car = vehicle as? Car {
+        car.drive()
+    }
+}
 
 // ✅ GOOD 
-// 
+// 함수 내에서 타입을 체크하는 방법대신 다형성 (Polymorphism)을 활용하는 것이 좋습니다.
+protocol Vehicle {
+    func move(currentLocation: Location, newLocation: Location)
+}
 
+class Bicycle: Vehicle {
+    func move(currentLocation: Location, newLocation: Location) {
+        print("Pedal from \(currentLocation) to \(newLocation)")
+    }
+}
+
+class Car: Vehicle {
+    func move(currentLocation: Location, newLocation: Location) {
+        print("Drive from \(currentLocation) to \(newLocation)")
+    }
+}
+
+func travelToTexas(vehicle: Vehicle) {
+    vehicle.move(currentLocation: Location("here"), newLocation: Location("texas"))
+}
 ```
 
-##### 1️⃣5️⃣ Remove Dead Code
+##### 1️⃣5️⃣ Remove Dead Code ⭐️⭐️⭐️
 
 + 사용하지 않는 죽은 코드를 코드 베이스에 남겨두지 말라는 뜻입니다.
 + Git이 있으니 언제든지 히스토리 복원이 가능할뿐만 아니라, 괜히 코드에 혼란만 주기 때문이죠.
@@ -441,40 +519,113 @@ let req = newRequestModule
 ---
 ##### 1️⃣ Use Pure Objects
 
-+ 실제 활
++ 순수 객체 (Pure Object)를 사용하라는 말입니다.
++ 순수 객체란 "외부 객체나 시스템에 의해 상태가 변경되지 않고" "자기 자신의 상태만 변경하거나, 복제하여 새로운 객체를 반환하는 객체"를 의미합니다.
+
+>[!question] Use Pure Objects에 대해
+>개인적으로 이 부분은 너무 과한 조치라고 생각합니다.
+>오히려 [[액터 (Actor)]]나 [[Sendable]]과 같은 문법 개념을 사용해 Data race로부터 안전한 환경을 구현할 수 있는 방법을 찾아보는게 더 적합하다고 생각이 드네요 !
 
 ```Swift
 // ❌ BAD 
-// 
+// fuelTank라는 내부 프로퍼티를 외부에서도 쉽게 변경할 수 있다 - ship.addFuel(fuel:)
+class Spaceship {
+    var fuelTank: Int
+
+    init(fuelTank: Int) {
+        self.fuelTank = fuelTank
+    }
+
+    func launch() {
+        Rocket().ignite(boosters: self.fuelTank)
+    }
+
+    func addFuel(fuel: Int) {
+        self.fuelTank += fuel
+    }
+}
 
 // ✅ GOOD 
-// 
+// fuelTank는 상수. refuel하면 새로운 인스턴스를 반환
+class Spaceship {
+    let fuelTank: Int
 
+    init(fuelTank: Int) {
+        self.fuelTank = fuelTank
+    }
+
+    func refuel(amount: Int) -> Spaceship {
+        return Spaceship(fuelTank: self.fuelTank + amount)
+    }
+}
 ```
 
-##### 2️⃣ Make decisions based on an object
+##### 2️⃣ Make decisions based on an object ⭐️⭐️
 
-+ 실제 활
++ 객체의 내부 속성으로 의사결정을 하지말고, 타입 (열거형)으로 의사결정을 하도록 만들라는 것입니다.
++ 쉽게 말해 문자열 비교는 실수가 발생하기 쉬우니 + 타입 체크도 불가능하고, 별도의 enum 타입을 만들어 상용하라는 것입니다. 
 
 ```Swift
 // ❌ BAD 
-// 
+if car.engine.type == "v8" { ... }
+if bike.tires.type == "fat" { ... }
 
 // ✅ GOOD 
-// 
+enum Engine {
+    case v8
+}
 
+enum Tire {
+    case fat
+}
+
+if car.engine == .v8 { ... }
+if bike.tires == .fat { ... }
 ```
 
-##### 3️⃣ Use Getters and Setters
+##### 3️⃣ Use Getters and Setters ⭐️
 
-- 
+- 객체의 속성에 접근할 때는 프로퍼티 자체에 "직접 접근"하지 못하게 작성하라고 합니다.
+- 그것보다는 Getter/Setter 연산자를 활용한 "간접 접근"을 구현해 내부 구현을 보호하고 검증하는 과정을 넣으라는 의미이죠.
 
 ```Swift
 // ❌ BAD 
-// 
+class User {
+    var name: String
+    var age: Int
+}
+
+let user = User(name: "John", age: 30)
+user.name = ""    
+user.age = -5     
 
 // ✅ GOOD 
-// 
+class User {
+    private var _name: String
+    private var _age: Int
+
+    var name: String {
+        get { return _name }
+        set {
+            if newValue.isEmpty {
+                print("Name cannot be empty.")
+            } else {
+                _name = newValue
+            }
+        }
+    }
+
+    var age: Int {
+        get { return _age }
+        set {
+            if newValue < 0 {
+                print("Age cannot be negative.")
+            } else {
+                _age = newValue
+            }
+        }
+    }
+}
 
 ```
 
