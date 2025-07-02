@@ -115,6 +115,29 @@ func fetchStepCount() {
 }
 ```
 
+**데이터 조회할 때 자주 쓰는 옵션들**
+* `predicate` (조회 범위 설정)
+	* 시간 범위, 샘플 조건 등을 필터링할 수 있음
+	* 자주 쓰는 predicate 종류
+		- `predicateForSamples(withStart:end:options:)` : 시간 필터링
+	    - `predicateForObjects(from:)` : 특정 앱이 기록한 데이터만
+	    - `predicateForObjects(withDeviceProperty:)` : 특정 기기에서 기록한 데이터
+* `limit` (최대 조회 수 제한)
+	* 한번에 가져올 샘플 수 제한
+	* `HKObjectQueryNoLimit` 사용 시 전부 가져옴
+* `sortDescriptors` (정렬)
+	* 조회된 샘플의 정렬 기준 
+	* 자주 사용하는 키
+		* `HKSampleSortIdentifierStartDate` : 샘플이 시작된 시간 기준 정렬
+		* `HKSampleSortIdentifierEndDate` : 샘플이 종료된 시간 기준으로 정렬
+
+```Swift
+let sortByDate = NSSortDescriptor(
+    key: HKSampleSortIdentifierStartDate, // 시작된 시간 기준
+    ascending: false // 시작 시간 기준으로 한 내림차순 정렬
+)
+```
+
 
 2. 걸음 수 입력하기
 
