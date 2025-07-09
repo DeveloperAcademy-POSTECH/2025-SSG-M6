@@ -56,6 +56,8 @@ show(photo)
 
 실행 도중 **일시적으로 중단(suspend)될 수 있는** 함수를 의미한다. throws가 오류를 발생시키는 함수임을 나타내듯이, async는 비동기 작업을 수행해 중단될 수 있는 함수임을 나타낸다.
 
+에러가 발생할 수 있는 함수를 나타내기 위해 `throws`를 붙여주듯이, 비동기 함수를 나타내기 위해서는 `async`를 붙여준다. 
+
 ```swift
 func listPhotos(inGallery name: String) async -> [String] {
     // 네트워크 요청 등 비동기 작업 수행
@@ -63,6 +65,7 @@ func listPhotos(inGallery name: String) async -> [String] {
 ```
 
 이때, async와 throw를 함께 사용해 오류 처리까지도 가능하다.
+에러가 발생할 수 있는 비동기 함수라면 `throws` 전에 `async`를 붙여준다.
 
 ```swift
 func listPhotos(inGallery name: String) async throws -> [String]
@@ -76,13 +79,16 @@ let photos = try await listPhotos(inGallery: "Gallery")
 
 비동기 함수가 언제 끝날지 모르니, 완료될 때까지 기다리자는 의미를 명시적으로 전달하는 역할이다. Swift에서는 await 키워드를 사용해 비동기 함수의 중단 가능한 지점을 명시적으로 표시한다. 이렇게 함으로써 중단 가능한 곳이 명확해져서 코드 가독성을 향상시키고 개발자가 어디서 작업이 멈출 수 있는지를 잘 알 수 있게 해준다. 또한, 컴파일러가 중단 지점을 파악해 동시성 문제를 미리 감지할 수 있게 되어 버그 발생의 가능성이 줄어든다.
 
+에러를 실제로 던지는 즉, 에러가 발생할 수 있는 함수를 호출할 때 `try`를 붙여주듯이, 비동기 함수를 호출할 때에는 즉, 중단될 가능성이 있을 때는 `await`을 붙여준다. 
+
+에러가 발생할 수 있는 비동기 함수라면 `await` 전에 `try`를 붙여준다.
+
 ```swift
 let names = await listPhotos(inGallery: "Gallery") // 이 시점에 일시 중단이 가능하다
 let name = names.first!
 let photo = await downloadPhoto(named: name) // 이 시점에도 일시 중단이 가능하다
 show(photo)
 ```
-
 
 #### async await 코드의 실행
 
