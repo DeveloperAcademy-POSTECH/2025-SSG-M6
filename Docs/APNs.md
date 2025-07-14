@@ -16,7 +16,7 @@
 
 ![[APNs Device Token 등록 흐름도.png]]
 >[!info] Device Token
->Device Token은 Push를 제대로 App에 보내기 위한 고유 주소 역할을 한다.
+>Device Token은 Push를 제대로 App에 보내기 위한 고유 주소 역할(64자리 16진수 문자열)을 한다.
 >기기와 앱 모두 고유한 주소를 가지며, 두 앱이 같은 기기에 있더라도 A앱의 토큰을 B앱에서 사용할 수 없다.
 >앱이 시작되면 APNs에 요청해 Devcie Token을 얻을 수 있고 이걸 서버로 보내 저장하고 있도록 한다.
 >Device Token은 앱이 백업될 때, 새로 발급된다.
