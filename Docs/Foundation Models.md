@@ -8,14 +8,14 @@
 ## Description
 
 - 이번 WWDC25에서 Foundation Models라는 게 발표됐습니다.
-- [[대규모 언어 모델(LLM)]]인데요. On-Device (별도의 서버 필요없음, 보안 안전, 앱 용량을 차지하지 않음)이고, 앱 개발 (macOS, iOS, iPadOS, visionOS)에 사용할 수 있는 Framework입니다.
+- [[대규모 언어 모델(LLM)]]인데요. On-Device (별도의 서버 필요없음, 보안 안전, 앱 용량을 차지하지 않음)이고, 앱 개발 (macOS, iOS, iPadOS, visionOS)에  사용할 수 있는 Framework입니다.
 
 
 ## 주요 기능
 
 + 프롬프트를 읽고 알맞은 답변을 내놓습니다. (prompt, response)
 + **Stateful sessions** : 이전 프롬프트/응답을 기억합니다. (session, transcript)
-+ **Guided Generation** : 데이터 구조에 맞춘 응답 생성. (`@Generable` - 모델이 생성할 타입, `@Guide` - 타입 속성의 가이드)
++ **Guided Generation** : 데이터 구조에 맞춘 응답 생성. ([[@Generable]] - 모델이 생성할 타입, `@Guide` - 타입 속성의 가이드)
 
 >[!question] 왜 Guided generation이 필요한거야?
 > 언어 모델은 기본적으로 "비구조화" 되어있는 자연어를 답변으로 출력합니다.
@@ -155,15 +155,72 @@ struct AvailabilityExampleView: View {
 }
 ```
 
-- 또한 모델을 호출할 때 발생할 수 있는 에러도 존재합니다. 분기 처리를 역시 해줘야합니다.
-	- **Guardrail violation** 
+- 또한 모델을 호출할 때 발생할 수 있는 에러 (`GenerationError`)도 존재합니다. 분기 처리를 역시 해줘야합니다.
+	- **Guardrail violation** : `guardrailViolation`
 	  : 부적절한 컨텐츠나 보안상 민감 정보 등 Foundation Models가 생성해서는 안되는 자연어의 경우 반환되는 에러
+	  * 생성형 모델의 안정성에 대한 내용은 [Apple Developer Documentation - Improving safety from generative model output](https://developer.apple.com/documentation/foundationmodels/improving-safety-from-generative-model-output?changes=_10_5) 아티클 내용 참조 !
 	  
-	- **Unsupported language** 
+	- **Unsupported language** : `unsupportedLanguageOrLocale`
 	  : Foundation Models가 지원하지 않는 언어 (현재는 한국어, 영어, 일본어, 중국어-간체 등 사용할만한 언어를 모두 지원해서 크게 신경쓸 필요는 없을 듯!)
-	  
-	- **Context window exceeded**
+
+```Swift
+// 언어 지원 확인하는 예제 코드
+var session = LanguageModelSession()
+
+do {
+    let response = try await session.respond(to: userInput)
+    print(response.content)
+} catch LanguageModelSession.GenerationError.unsupportedLanguageOrLocale {
+	// 언어를 지원하지 않는 경우 발생시킬 에러 처리
+}
+
+let supportedLanguages = SystemLanguageModel.default.supportedLanguages
+guard supportedLanguages.contains(Locale.current.language) else {
+	// 메시지 보여주기 코드 추가
+	return
+}
+```
+
+	- **Context window exceeded** : `exceededContextWindowSize`
 	  : 이전 맥락을 기억할 수 없는 상황 (LLM은 내부적으로 제한된 기억 버퍼를 가지기 때문. 과거 맥락을 짤라냄.)
+
+>[!question] exceededContextWidowSize Error가 발생했을 때 그럼 어떻게 처리를 해야해?
+> `GenerationError.exceededContextWindowSize` 에러에 대해 분기 처리를 해주고, 별도의 session을 다시 시작하는 방법이 있습니다.
+> 하지만, 이런 경우 새로 시작된 session은 이전 대화 기록을 모두 잊게 된다는 문제가 발생하게 되죠.
+> 
+> 이 경우 두 가지 방법을 수행할 수 있습니다.
+> 1. 이전 Session의 Entry 첫 번째 (instructions)와 마지막 값 (Response)을 새로운 Session의 transcript로 전달한다.
+> 2. 이전 Session의 모든 transcript를 요약해서 (Summarize) 새로운 Session의 trnascript로 전달한다.
+
+```Swift
+// 1번 case 예시 코드
+var session = LanguageModelSession(instructions: "블라블라")
+
+do {
+    let response = try await session.respond(to: prompt)
+    print(response.content)
+} catch LanguageModelSession.GenerationError.exceededContextWindowSize {
+	session = LanguageModelSession(instructions: "블라블라")
+}
+
+private func newSession(previousSession: LanguageModelSession) -> LanguageModelSession {
+	// 엔트리란 사용자가 모델이 입력을 주는 한번의 요청 (allEntries는 이전 세션의 모든 요청)
+	let allEntries = previousSession.transcript.entries
+	var condencedEntries = [Transcript.Entry]()
+
+	// 첫번째 Entry인 instruction과 마지막 Entry인 응답값 (Response)을 가져옴
+	if let firstEntry = allEntries.first {
+		condencedEntries.append(firstEntry)
+		if allEntries.count > 1, let lastEntry = allEntries.last {
+			condencedEntries.append(lastEntry)
+		}
+	}
+
+	// 이전 Entry에서 추출한 값들을 새로운 Session으로 정보를 전달함
+	let condensedTranscript = Transcript(entries: condencedEntries)
+	return LanguageModelSession(transcript: condensedTranscript)
+}
+```
 
 
 ## Keywords
