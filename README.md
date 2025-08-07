@@ -6,8 +6,7 @@ Obsidian을 활용하여 학습한 내용을 Markdown 노트로 기록하고, Gi
 
 ### 🪐 지금 우리는 (매주 업데이트 예정)
 
-<img width="1049" height="957" alt="Screenshot 2025-08-04 at 8 57 52 PM" src="https://github.com/user-attachments/assets/412a7028-c4d2-4038-af30-e023e72218fb" />
-
+<img width="853" height="837" alt="Screenshot 2025-08-07 at 10 49 56 PM" src="https://github.com/user-attachments/assets/7e322902-f6d5-4aca-9208-e0c9c369de3f" />
 
 ### 👥 Team Member
 + [@mini-min](https://github.com/mini-min)
@@ -28,7 +27,6 @@ git clone https://github.com/DeveloperAcademy-POSTECH/SSG-Team1.git
 cd SSG-Team1.git
 // obsidian 저장소의 vault를 해당 디렉토리로 설정해주세요!
 ```
-
 
 
 

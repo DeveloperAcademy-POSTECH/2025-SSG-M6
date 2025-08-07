@@ -15,6 +15,7 @@
 - [[HealthKit]]
 - [[MapKit]]
 - [[RealityKit]]
+	- [[Model3D]]
 - [[SceneKit]]
 - [[ShazamKit]]
 - [[Speech]]
