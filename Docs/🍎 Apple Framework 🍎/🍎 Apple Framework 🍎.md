@@ -11,6 +11,7 @@
 - [[Combine]]
 - [[Core Data]]
 - [[Core Haptics]]
+- [[Core Location]]
 - [[HealthKit]]
 - [[MapKit]]
 - [[RealityKit]]
