@@ -34,7 +34,7 @@ CoreLocation은 iOS에서 기기의 현재 위치를 가져오거나 지속적�
 	* 절약 방법 :
 		* 정확도 낮추기 → GPS 사용 최소화
 		* `distanceFilter` 로 보고 빈도 줄이기
-		![[CoreLocation 백그라운드 모드 설정 1.png]]
+		![[CoreLocation 백그라운드 모드 설정.png]]
 
 4. 중요 위치 변화 감지 - `startMonitoringSignificantLocationChanges()`
 	- **큰 이동**(셀룰러 기지국 전환 등) 시에만 보고
