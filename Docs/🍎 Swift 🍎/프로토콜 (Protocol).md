@@ -172,7 +172,7 @@ class SomeSubClass: SomeSuperClass, SomeProtocol {
 + Class, Struct, Enum
 + Getter, Setter
 + Delegation
-+ [[Method]]
++ Method
 
 ## References
 - [Swift.org](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/protocols/)

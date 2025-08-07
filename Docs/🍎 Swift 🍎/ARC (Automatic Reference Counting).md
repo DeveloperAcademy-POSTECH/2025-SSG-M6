@@ -5,7 +5,7 @@
 ## Description
 
 - Swift의 ARC (Automatic Reference Counting)는 앱의 메모리 관리를 자동화하는 기술이다.
-- Value Type인 구조체 (Struct), 열거형 (Enum)에는 해당되지 않으며, Reference Type인 클래스 (Class)에만 해당된다. = 즉. 참조 타입 (Referece Type)을 사용하면, ARC가 메모리 관리를 자동으로 한다.
+- Value Type인 구조체 (Struct), [[열거형 (enum)]]에는 해당되지 않으며, Reference Type인 클래스 (Class)에만 해당된다. = 즉. 참조 타입 (Referece Type)을 사용하면, ARC가 메모리 관리를 자동으로 한다.
 - 즉, 우리 개발자는 메모리 관리에 대한 큰 부담 하나를 코딩을 할 때 덜고 가는 셈! 
 
 ##### 어떻게 이게 가능하냐고..?

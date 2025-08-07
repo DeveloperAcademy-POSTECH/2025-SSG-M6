@@ -7,7 +7,7 @@
 
 ## MapKit이 뭔데 !
 
-Apple에서 제공하는 지도 [[프레임워크 (Framework)]]로, iOS, iPadOS, macOS, watchOS에서 지도를 표시하고 다양한 지도 관련 기능을 앱에 통합할 수 있도록 도와주는 도구입니다. 
+Apple에서 제공하는 지도 Apple Framework로, iOS, iPadOS, macOS, watchOS에서 지도를 표시하고 다양한 지도 관련 기능을 앱에 통합할 수 있도록 도와주는 도구입니다. 
 이 프레임워크를 통해 지도를 표시하고, 위치 기반 정보를 시각화하거나, 사용자 상호작용을 처리할 수 있습니다.
 
 #### MapKit의 기능

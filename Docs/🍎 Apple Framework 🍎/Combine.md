@@ -110,7 +110,7 @@ Combine은 다양한 [[비동기 (Asynchronous)]]/이벤트 작업을 하나의 
 [[비동기 (Asynchronous)]]
 [[반응형 프로그래밍 (Reactive Programming)]]
 
-## [[RxSwift]]가 이미 널리 쓰이고 있었는데, 왜 [[컴바인 (Combine)]]프레임워크를 새로 만들었을까?
+## [[RxSwift]]가 이미 널리 쓰이고 있었는데, 왜 [[Combine]]프레임워크를 새로 만들었을까?
 
 취업 공고를 들어가면 보이는 .. "RxSwift 가능하신 분 🙋🏻‍♀️ Combine 사용해보신 분 🙋🏻‍♂️" 보고 의문을 가지게 되었어요.
 

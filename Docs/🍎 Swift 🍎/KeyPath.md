@@ -11,7 +11,7 @@ KeyPath는 KeyPath<Root, Value> 형태로 정의된다.
 - Root : 경로의 시작점이 되는 타입
 - Value : 최종적으로 접근하는 속성의 타입
 
-KeyPath는 데이터 흐름이 자동으로 연결도는 환경인 SwiftUI, [[컴바인 (Combine)]], RxSwift, [[Realm]] 등에서 많이 사용된다.
+KeyPath는 데이터 흐름이 자동으로 연결도는 환경인 SwiftUI, [[Combine]], RxSwift, [[Realm]] 등에서 많이 사용된다.
 
 ## 주요 기능
 ---

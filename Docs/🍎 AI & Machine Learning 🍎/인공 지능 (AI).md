@@ -11,8 +11,5 @@
 ## 코드 예시
 + 
 
-## Keywords
-+ [[빅데이터(Big Data)]]
-
 ## References
 - [CloudFlare](https://www.cloudflare.com/learning/ai/what-is-artificial-intelligence/)

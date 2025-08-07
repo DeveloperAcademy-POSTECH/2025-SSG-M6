@@ -6,8 +6,7 @@ Obsidian을 활용하여 학습한 내용을 Markdown 노트로 기록하고, Gi
 
 ### 🪐 지금 우리는 (매주 업데이트 예정)
 
-<img width="987" height="965" alt="스크린샷 2025-07-11 오전 1 14 35" src="https://github.com/user-attachments/assets/ffa5e217-5ae1-46ed-ab7f-8bc42c47f467" />
-
+<img width="1049" height="957" alt="Screenshot 2025-08-04 at 8 57 52 PM" src="https://github.com/user-attachments/assets/412a7028-c4d2-4038-af30-e023e72218fb" />
 
 
 ### 👥 Team Member

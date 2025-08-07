@@ -7,7 +7,7 @@
 
 ## CallKit이 뭔데 !
 
-**CallKit**은 Apple이 제공하는. [[프레임워크 (Framework)]]로, VoIP (Voice over IP) 앱이 시스템 수준의 전화처럼 수신/발신 통화 UI를 제공하고, 다른 앱 및 시스템 동작(방해 금지 모드 등)과 자연스럽게 통합되도록 해줍니다.
+**CallKit**은 Apple이 제공하는. Apple Framework로, VoIP (Voice over IP) 앱이 시스템 수준의 전화처럼 수신/발신 통화 UI를 제공하고, 다른 앱 및 시스템 동작(방해 금지 모드 등)과 자연스럽게 통합되도록 해줍니다.
 
 쉽게 말해 나의 앱이 WhatsApp, FaceTime, 전화 앱처럼 보이고 동작하게 만들어줌
 

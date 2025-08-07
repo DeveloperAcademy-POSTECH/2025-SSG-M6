@@ -8,7 +8,7 @@
 
 ## ShazamKit이 뭔데 !
 
-<font color="palevioletred">Shazamkit</font>은 오디오 샘플을 <font color="palevioletred">Shazamkit</font> 카탈로그 또는 사용자 설정 오디오 카탈로그와 일치 시켜 오디오 인식을 지원하는 [[프레임워크 (Framework)]]입니다.
+<font color="palevioletred">Shazamkit</font>은 오디오 샘플을 <font color="palevioletred">Shazamkit</font> 카탈로그 또는 사용자 설정 오디오 카탈로그와 일치 시켜 오디오 인식을 지원하는 Apple Framework입니다.
 
 ![[ShazamKitPlatform.png]]
 다 지원이 됩니다. 🫳🏻 🫳🏻
@@ -37,7 +37,7 @@
 
 ## ShazamKit은 어떤 식으로 음원을 인식할까?
 
-<font color="palevioletred">Shazamkit</font>은 음원의 고유한 '음향 시그니처'를 생성하여 이를 [[데이터베이스 (Database)]]내 시그니처들과 비교해 일치 항목을 찾습니다.
+<font color="palevioletred">Shazamkit</font>은 음원의 고유한 '음향 시그니처'를 생성하여 이를 데이터베이스 (Database) 내 시그니처들과 비교해 일치 항목을 찾습니다.
 
 #### 1. 오디오 캡처
 

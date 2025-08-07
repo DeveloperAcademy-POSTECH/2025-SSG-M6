@@ -8,14 +8,14 @@
 ## Description
 
 - 이번 WWDC25에서 Foundation Models라는 게 발표됐습니다.
-- [[대규모 언어 모델(LLM)]]인데요. On-Device (별도의 서버 필요없음, 보안 안전, 앱 용량을 차지하지 않음)이고, 앱 개발 (macOS, iOS, iPadOS, visionOS)에  사용할 수 있는 Framework입니다.
+- [[대규모 언어 모델 (LLM)]]인데요. On-Device (별도의 서버 필요없음, 보안 안전, 앱 용량을 차지하지 않음)이고, 앱 개발 (macOS, iOS, iPadOS, visionOS)에  사용할 수 있는 Framework입니다.
 
 
 ## 주요 기능
 
 + 프롬프트를 읽고 알맞은 답변을 내놓습니다. (prompt, response)
 + **Stateful sessions** : 이전 프롬프트/응답을 기억합니다. (session, transcript)
-+ **Guided Generation** : 데이터 구조에 맞춘 응답 생성. ([[@Generable]] - 모델이 생성할 타입, `@Guide` - 타입 속성의 가이드)
++ **Guided Generation** : 데이터 구조에 맞춘 응답 생성. ([[Generable]] - 모델이 생성할 타입, `@Guide` - 타입 속성의 가이드)
 
 >[!question] 왜 Guided generation이 필요한거야?
 > 언어 모델은 기본적으로 "비구조화" 되어있는 자연어를 답변으로 출력합니다.

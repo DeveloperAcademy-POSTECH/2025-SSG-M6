@@ -8,7 +8,7 @@
 
 - 매크로는 Swift 5.9 (WWDC 23)에 도입된 기능으로 컴파일 시간 (Compile Time)에 생성되는 코드 조각을 의미합니다.
 
-- Swift는 이미 "Built-in code expansion", 즉 "컴파일 타임에 자동으로 코드가 확장되거나 생성되는 내장 기능"을 지원하고 있었습니다. ([[프로퍼티 래퍼 (Property Wrappers)]]나 @ViewBuilder와 같은 [[Result Builder]] 등이 해당되죠.)
+- Swift는 이미 "Built-in code expansion", 즉 "컴파일 타임에 자동으로 코드가 확장되거나 생성되는 내장 기능"을 지원하고 있었습니다. ([[프로퍼티 래퍼 (Property Wrappers)]] @ViewBuilder와 같은 [[Result Builder]] 등이 해당되죠.)
 - 하지만 Swift 컴파일러가 컴파일 시점에 기본으로 지원하지 않는 기능일 때, 
   직접 Swift Package로 배포하여 Built-in code expansion을 커스텀해 사용할 수 있도록 도입된 기능이 바로 매크로 (Macro)입니다.
 

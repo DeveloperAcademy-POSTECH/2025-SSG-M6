@@ -1,0 +1,2 @@
+- [[델리게이트 패턴 (Delegate Pattern)]]
+- [[싱글톤 패턴 (Singleton Pattern)]]

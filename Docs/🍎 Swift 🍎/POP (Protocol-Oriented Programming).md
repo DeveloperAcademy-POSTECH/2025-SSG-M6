@@ -7,7 +7,7 @@
 - 프로토콜 지향 프로그래밍
 - POP는 **프로토콜을 중심으로 설계하고 구현**하는 프로그래밍 스타일
 - OOP(객체 지향 프로그래밍, Object-Oriented Programming)가 가진 단점을 보완한 Swift 맞춤형 설계 방식
-- Swift의 핵심인 [[구조체 (Struct)]], [[열거형 (enum)]], [[프로토콜 (Protocol)]], [[확장 (Extension)]] 이 POP의 4총사
+- Swift의 핵심인 [[구조체 (Struct)]], [[열거형 (enum)]], [[프로토콜 (Protocol)]], [[익스텐션 (Extension)]] 이 POP의 4총사
 
 > [!POP와 OOP의 차이점]
 > |구분|OOP|POP|
